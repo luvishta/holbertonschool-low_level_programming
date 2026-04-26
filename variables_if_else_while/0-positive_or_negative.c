@@ -3,9 +3,9 @@
 #include <time.h>
 
 /**
- * main - Entry point
+ * main - prints whether n is positive, zero or negative
  *
- * Return: Always 0 (Sucess)
+ * Return: 0
  */
 int main(void)
 {
