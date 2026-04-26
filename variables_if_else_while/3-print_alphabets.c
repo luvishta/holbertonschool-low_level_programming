@@ -3,9 +3,8 @@
 /**
  * main - prints lowercase and uppercase alphabets
  *
- * return : Always 0 (Sucess)
+ * Return: 0 (Success)
  */
-
 int main(void)
 {
 	char c;
