@@ -1,10 +1,11 @@
-#include "stdio.h"
+#include "main.h"
 
 /**
- * Entry - prints _putchar, followed by a new line.
+ * main - entry point
  *
- * Return: Always 0 (sucess)
+ * Return: Always 0
  */
+int main(void)
 {
     _putchar('_');
     _putchar('p');
