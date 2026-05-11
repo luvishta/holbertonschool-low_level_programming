@@ -13,7 +13,7 @@ unsigned int num = 0;
 while (s[i] != '\0')
 {
 if (s[i] == '-')
-sign = -1;
+sign *= -1;
 if (s[i] >= '0' && s[i] <= '9')
 {
 while (s[i] >= '0' && s[i] <= '9')
