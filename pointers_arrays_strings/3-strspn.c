@@ -22,8 +22,8 @@ unsigned int _strspn(char *s, char *accept)
 			}
 		}
 		if (match == 0)
-			return(i);
-	
+
+			return (i);
 	}
-return(i);
+return (i);
 }
