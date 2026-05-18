@@ -8,7 +8,7 @@
 */
 int _find_sqrt(int n, int i)
 {
-	if (i *i == n)
+	if (i * i == n)
 		return (i);
 
 	if (i * i > n)
