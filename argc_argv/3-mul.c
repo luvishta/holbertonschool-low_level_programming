@@ -1,5 +1,5 @@
+#include <stdlib.h>
 #include "stdio.h"
-#include "stdlib.h"
 /**
 * main - should give result of the multiplication
 *@argc: - the number of command line
