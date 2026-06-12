@@ -1,0 +1,2 @@
+#!/bin/bash
+hellllll nahhhhhhh
