@@ -13,7 +13,7 @@ int main(int c, char *v[])
 	if (c != 3)
 	{
 		dprintf(1, "Usage: cp file_from file_to\n");
-		return (97);
+		exit(97);
 	}
 
 	f1 = open(v[1], O_RDONLY);
