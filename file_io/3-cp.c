@@ -12,7 +12,6 @@ int main(int c, char *v[])
 
 	if (c != 3)
 	{
-		dprintf(1, "Usage: cp file_from file_to\n");
 		exit(97);
 	}
 
