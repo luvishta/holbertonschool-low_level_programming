@@ -1,44 +1,72 @@
 #include "main.h"
+#define BUF 1024
 /**
-*main - copies a file into another file
-*@c: argument count
-*@v: argument vector*
-*Return: 0 on success, or exit codes on failure
+ * close_fd - closes a file descriptor
+ * @fd: file descriptor to close
  */
-int main(int c, char *v[])
+void close_fd(int fd)
 {
-	int f1, f2, r, w;
-	char b[1024];
-
-	if (c != 3)
+	if (close(fd) == -1)
 	{
-		exit(97);
+		dprintf(2, "Error: Can't close fd %d\n", fd);
+		exit(100);
 	}
+}
+/**
+ * copy_file - copies data from one file to another
+ * @from: source file descriptor
+ * @to: destination file descriptor
+ * @name: destination file name
+ */
+void copy_file(int from, int to, char *name)
+{
+	char buf[BUF];
+	ssize_t r, w;
 
-	f1 = open(v[1], O_RDONLY);
-	if (f1 == -1)
-		return (dprintf(1, "Error: Can't read from file %s\n", v[1]), 98);
-	f2 = open(v[2], O_WRONLY | O_CREAT | O_TRUNC, 0664);
-	if (f2 == -1)
-		return (dprintf(1, "Error: Can't write to %s\n", v[2]), close(f1), 99);
-	r = read(f1, b, 1024);
-	while (r > 0)
+	while ((r = read(from, buf, BUF)) > 0)
 	{
-		w = write(f2, b, r);
+		w = write(to, buf, r);
 		if (w != r)
-			return (dprintf(1, "Error: Can't write to %s\n", v[2]),
-					close(f1), close(f2), 99);
-		r = read(f1, b, 1024);
+		{
+			dprintf(2, "Error: Can't write to %s\n", name);
+			close_fd(from);
+			close_fd(to);
+			exit(99);
+		}
 	}
-
 	if (r == -1)
-		return (dprintf(1, "Error: Can't read from file %s\n", v[1]),
-				close(f1), close(f2), 98);
+	{
+		dprintf(2, "Error: Can't read from file %s\n", name);
+		close_fd(from);
+		close_fd(to);
+		exit(98);
+	}
+}
+/**
+ * main - copies the contents of one file to another
+ * @argc: number of arguments
+ * @argv: array arguments
+ * Return: 0 on success, exits with error codes on failure
+ */
+int main(int argc, char *argv[])
+{
+	int from, to;
 
-	if (close(f1) == -1)
-		return (dprintf(1, "Error: Can't close fd %d\n", f1), 100);
+	if (argc != 3)
+		return (dprintf(2, "Usage: cp file_from file_to\n"), 97);
 
-	if (close(f2) == -1)
-		return (dprintf(1, "Error: Can't close fd %d\n", f2), 100);
+	from = open(argv[1], O_RDONLY);
+	if (from == -1)
+		return (dprintf(2, "Error: Can't read from file %s\n", argv[1]), 98);
+	to = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	if (to == -1)
+	{
+		dprintf(2, "Error: Can't write to %s\n", argv[2]);
+		close_fd(from);
+		exit(99);
+	}
+	copy_file(from, to, argv[2]);
+	close_fd(from);
+	close_fd(to);
 	return (0);
 }
